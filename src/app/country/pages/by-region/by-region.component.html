@@ -1,7 +1,18 @@
-<app-search placeholder="Buscar por Región..." (value)="query.set($event)"/>
-@if(resource.error()) {
-  <h3 class="p-3">{{resource.error()}}</h3>
-} @if (resource.hasValue()) {
-  <app-search-results [results]="resource.value()!"/>
-}
 
+<section class="row mt-2">
+  <div class="flex-col">
+    @for(region of regions; track $index) {
+      <button type="button"
+              class="btn mr-2"
+              (click)="selectedRegion.set(region)"
+              [class.btn-primary]="selectedRegion() === region">{{region}}</button>
+    }
+  </div>
+
+</section>
+
+<app-search-results
+ [results]="resource.value() ?? []"
+ [errorMessage]="resource.error()"
+ [isEmpty]="resource.value()?.length === 0"
+ [isLoading]="resource.isLoading()"/>
