@@ -1,3 +1,8 @@
-<app-search placeholder="Buscar por Capital..."/>
-<app-search-results/>
+<app-search placeholder="Buscar por Capital..." (value)="query.set($event);"/>
+@if(countryResource.error()) {
+  <h3 class="p-3">{{countryResource.error()}}</h3>
+} @if (countryResource.hasValue()) {
+  <app-search-results [results]="countryResource.value()"/>
+}
+
 
