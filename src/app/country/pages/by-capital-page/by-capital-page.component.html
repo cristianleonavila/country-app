@@ -1,4 +1,4 @@
-<app-search placeholder="Buscar por Capital..." (value)="query.set($event);"/>
+<app-search placeholder="Buscar por Capital..." (value)="query.set($event);" [initialValue]="query()"/>
 <app-search-results
  [results]="resource.value() ?? []"
  [errorMessage]="resource.error()"

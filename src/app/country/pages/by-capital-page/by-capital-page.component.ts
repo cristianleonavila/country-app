@@ -1,10 +1,10 @@
-import { Component, inject, signal, resource } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { SearchComponent } from "../../shared/search/search.component";
 import { SearchResultsComponent } from "../../shared/search-results/search-results.component";
 import { CountryService } from '../../services/country.service';
-import { Country } from '../../interfaces/country';
-import { firstValueFrom, of } from 'rxjs';
+import { of } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-by-capital-page',
@@ -14,13 +14,20 @@ import { firstValueFrom, of } from 'rxjs';
 export default class ByCapitalPageComponent {
 
   countryService = inject(CountryService);
-
-  query = signal<string>("");
+  activatedRoute = inject(ActivatedRoute);
+  queryParam = this.activatedRoute.snapshot.queryParamMap.get('query') ?? '';
+  query = signal<string>(this.queryParam);
+  router = inject(Router);
 
   resource = rxResource({
     request: () => ({query: this.query()}),
     loader: ({request}) => {
       if ( !request.query ) return of([]);
+      this.router.navigate(['/country/by-capital'], {
+        queryParams: {
+          query: request.query
+        }
+      });
       return this.countryService.searchByCapital(request.query);
     }
   });
