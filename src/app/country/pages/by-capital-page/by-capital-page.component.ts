@@ -1,9 +1,10 @@
 import { Component, inject, signal, resource } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { SearchComponent } from "../../shared/search/search.component";
 import { SearchResultsComponent } from "../../shared/search-results/search-results.component";
 import { CountryService } from '../../services/country.service';
 import { Country } from '../../interfaces/country';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 
 @Component({
   selector: 'app-by-capital-page',
@@ -16,15 +17,30 @@ export default class ByCapitalPageComponent {
 
   query = signal<string>("");
 
+  resource = rxResource({
+    request: () => ({query: this.query()}),
+    loader: ({request}) => {
+      if ( !request.query ) return of([]);
+      return this.countryService.searchByCapital(request.query);
+    }
+  });
+
+
+  /*
+  Con promesas
   countryResource = resource({
     request: () => ({query: this.query()}),
     loader: async ({request}) => {
       if ( !request.query ) return [];
       return await firstValueFrom(this.countryService.searchByCapital(request.query));
     }
-  });
+  });*/
 
-  /*search(query:string) {
+
+
+  /*
+  http client tradicional
+  search(query:string) {
     if ( this.isLoading() ) return;
     if ( !query ) {
       this.countries.set([]);

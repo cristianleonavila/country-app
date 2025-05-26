@@ -9,7 +9,9 @@ export class CountryMapper {
       icon: from.flag,
       svg: from.flags.svg,
       population: from.population,
-      name: from.translations['spa'].common ?? 'No spanis name'
+      name: from.translations['spa'].common ?? 'No spanis name',
+      region: from.region,
+      subregion: from.subregion
     };
   }
 

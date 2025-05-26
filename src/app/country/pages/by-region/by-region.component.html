@@ -1,2 +1,7 @@
-<app-search placeholder="Buscar por Región..."/>
-<app-search-results [results]="[]"/>
+<app-search placeholder="Buscar por Región..." (value)="query.set($event)"/>
+@if(resource.error()) {
+  <h3 class="p-3">{{resource.error()}}</h3>
+} @if (resource.hasValue()) {
+  <app-search-results [results]="resource.value()!"/>
+}
+

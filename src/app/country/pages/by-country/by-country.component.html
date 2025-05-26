@@ -1,2 +1,7 @@
-<app-search placeholder="Buscar por País..."/>
-<app-search-results [results]="[]" />
+<app-search placeholder="Buscar por País..." (value)="query.set($event);"/>
+
+<app-search-results
+ [results]="resource.value() ?? []"
+ [errorMessage]="resource.error()"
+ [isEmpty]="resource.value()?.length === 0"
+ [isLoading]="resource.isLoading()"/>

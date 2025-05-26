@@ -26,7 +26,23 @@
               {{country.population | number }}
             </span>
           </td>
-          <td><a href="" class="link-primary">Más información...</a></td>
+          <td><a [routerLink]="['/country/by', country.cca2]"  class="link-primary">Más información...</a></td>
+        </tr>
+      }
+
+      @if(results().length === 0 && !isLoading() || errorMessage()) {
+        <tr>
+          <td colspan="8" class="text-center">
+            No se encontraron resultados
+          </td>
+        </tr>
+      }
+
+      @if(isLoading()) {
+        <tr>
+          <td colspan="8" class="text-center">
+            Buscando paises...
+          </td>
         </tr>
       }
     </tbody>

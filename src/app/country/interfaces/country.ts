@@ -3,6 +3,8 @@ export interface Country {
   icon:string;
   svg:string;
   capital:string;
-  population:number,
-  name:string
+  population:number;
+  name:string;
+  region:string;
+  subregion:string
 }
