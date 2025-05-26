@@ -3,14 +3,11 @@ import { SearchComponent } from "../../shared/search/search.component";
 import { SearchResultsComponent } from "../../shared/search-results/search-results.component";
 
 @Component({
-  selector: 'app-by-capital-page',
+  selector: 'app-by-region',
   imports: [SearchComponent, SearchResultsComponent],
-  templateUrl: './by-capital-page.component.html'
+  templateUrl: './by-region.component.html',
+  styles: ``
 })
-export default class ByCapitalPageComponent {
+export class ByRegionComponent {
 
-  search(query:string) {
-    console.log(query);
-
-  }
 }
